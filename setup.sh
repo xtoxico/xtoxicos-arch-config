@@ -55,9 +55,12 @@ else
     echo -e "${GREEN}[5/8] NVM ya está instalado.${NC}"
 fi
 
-# 6. Configuración de Zsh y Oh My Zsh
+# 6. Configuración de Aplicaciones (Zsh, Nano, Git, Btop)
+echo -e "${GREEN}[6/8] Configurando aplicaciones...${NC}"
+
+# Oh My Zsh
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
-    echo -e "${GREEN}[6/8] Instalando Oh My Zsh...${NC}"
+    echo -e "${GREEN}Instalando Oh My Zsh...${NC}"
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
     
     # Plugins personalizados
@@ -68,14 +71,23 @@ fi
 echo -e "${GREEN}Copiando archivos de configuración...${NC}"
 cp configs/zshrc ~/.zshrc
 cp configs/nanorc ~/.nanorc
+cp configs/gitconfig ~/.gitconfig
+
+# Btop
+mkdir -p ~/.config/btop
+cp configs/btop/btop.conf ~/.config/btop/btop.conf
 
 # 7. Configuración de GNOME
 echo -e "${GREEN}[7/8] Aplicando configuración de GNOME...${NC}"
-if [ -f "configs/gnome_extensions.dconf" ]; then
-    dconf load /org/gnome/shell/extensions/ < configs/gnome_extensions.dconf
-fi
-if [ -f "configs/gnome_interface.dconf" ]; then
-    dconf load /org/gnome/desktop/interface/ < configs/gnome_interface.dconf
+if command -v dconf &> /dev/null; then
+    if [ -f "configs/gnome_extensions.dconf" ]; then
+        dconf load /org/gnome/shell/extensions/ < configs/gnome_extensions.dconf
+    fi
+    if [ -f "configs/gnome_interface.dconf" ]; then
+        dconf load /org/gnome/desktop/interface/ < configs/gnome_interface.dconf
+    fi
+else
+    echo -e "${RED}Error: dconf no está instalado. No se pudo aplicar la configuración de GNOME.${NC}"
 fi
 
 # 8. Finalización
