@@ -1,44 +1,39 @@
-# xtoxico's Arch Linux Config
+# Arch Linux Config Manager (Multi-Profile & AI-Assisted)
 
-Este repositorio contiene mi configuración personal de Arch Linux, incluyendo listas de paquetes, configuraciones de shell (Zsh, Nano) y personalización de GNOME.
+Este repositorio ha evolucionado a un gestor avanzado de configuraciones para múltiples equipos, con cifrado de seguridad y asistencia por IA.
 
-## Contenido
-- `setup.sh`: Script de automatización para restaurar todo el entorno.
-- `pkglist.txt`: Lista de paquetes instalados vía `pacman`.
-- `aurlist.txt`: Lista de paquetes instalados vía `AUR`.
-- `configs/`:
-    - `zshrc` / `nanorc`: Configuraciones de shell y editor.
-    - `gitconfig`: Configuración global de Git.
-    - `btop/`: Configuración del monitor de sistema btop.
-    - `*.dconf`: Exportaciones de configuración de GNOME (Extensiones e Interfaz).
+## Características
+- **Multi-Perfil:** Soporta perfiles separados (ej. `desktop`, `thinkpad`).
+- **Cifrado:** Los datos se guardan en `.github_vault.zip` con contraseña, protegiendo tu privacidad en GitHub.
+- **Mix & Match:** El script `restore_partial.sh` permite mezclar configuraciones (ej. usar el Zsh del Sobremesa en el Portátil).
+- **IA Gemini:** Genera bitácoras automáticas que explican qué hace cada configuración antes de restaurarla.
+- **Respaldo de Sistema:** Soporte para `/etc/fstab`, `/etc/pam.d/`, y más.
 
-## Extensiones de GNOME incluidas
-El script restaurará la configuración de las siguientes extensiones (si están instaladas):
-- Bluetooth Battery Meter
-- Vitals
-- Tiling Assistant
-- App Grid Tuner
-- Caffeine
-- User Themes
-- Blur my Shell
-- Dash to Dock
-- Just Perfection
+## Instalación y Uso
 
-## Cómo usar
-1. Clona el repositorio:
+1. **Clonar y Descifrar:**
    ```bash
    git clone https://github.com/xtoxico/xtoxicos-arch-config.git
    cd xtoxicos-arch-config
-   ```
-2. Da permisos de ejecución al script:
-   ```bash
-   chmod +x setup.sh
-   ```
-3. Ejecuta el script:
-   ```bash
-   ./setup.sh
+   ./setup.sh  # Selecciona la opción 6 para descifrar si ya tienes un vault.
    ```
 
-## Requisitos
-- Una instalación limpia de Arch Linux.
-- Conexión a internet.
+2. **Realizar Backup:**
+   Ejecuta `./setup.sh` y elige la opción 1. Al final podrás subirlo automáticamente a GitHub cifrado.
+
+3. **Bitácora con IA:**
+   Elige la opción 2. Necesitarás una Gemini API Key (se guardará en un archivo `.env` local).
+
+4. **Restaurar:**
+   - **Completo (Opción 3):** Aplica todo un perfil.
+   - **Parcial (Opción 4):** Menú interactivo para elegir qué piezas restaurar de qué perfil.
+
+## Seguridad
+- La carpeta `profiles/` está en el `.gitignore`.
+- **NUNCA** subas archivos en texto plano. Usa siempre el script de cifrado.
+- Los archivos de sistema (`/etc`) se respaldan localmente con extensión `.bak` antes de ser sobrescritos.
+
+## Estructura
+- `scripts/`: Motores de backup y restauración.
+- `profiles/`: (Local) Almacena los perfiles en texto plano.
+- `.github_vault.zip`: (Remoto) Contenedor cifrado de tus perfiles.

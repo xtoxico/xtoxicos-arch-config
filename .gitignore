@@ -1,4 +1,5 @@
-.DS_Store
-.git/
-*.swp
-*~
+profiles/
+.env
+*.bak
+*.tmp
+# .github_vault.zip is NOT ignored because it's the encrypted backup we want to share.
